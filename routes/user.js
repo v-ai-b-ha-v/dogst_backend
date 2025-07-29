@@ -99,6 +99,9 @@ router.post('/updateStats', generalLimiter, authenticate, async (req, res) => {
 
     try {
 
+        console.log("update stats tested");
+        console.log("Incoming body:", req.body);
+
         const uid = req.user.uid;
 
 
@@ -223,6 +226,8 @@ router.post('/updateStats', generalLimiter, authenticate, async (req, res) => {
 
 router.get('/leaderboard', generalLimiter, authenticate, async (req, res) => {
     try {
+
+        console.log("User wants to view leaderboard");
 
         const allUsers = await User.find()
             .sort({ xp: -1 })
