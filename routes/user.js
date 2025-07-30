@@ -19,9 +19,9 @@ const getCurrentUser = async (req, res) => {
         }
 
         if (!user.userTargetScreenTime || user.userTargetScreenTime <= 0) {
-    console.log("User is NOT initialized!");
-    return res.status(404).json({ error: "User not initialized" });
-}
+            console.log("User is NOT initialized!");
+            return res.status(404).json({ error: "User not initialized" });
+        }
         const reqXP = getXPToNextLevel(user.xp);
         const level = getLevel(user.xp);
 
@@ -113,8 +113,11 @@ router.post('/updateStats', generalLimiter, authenticate, async (req, res) => {
 
         const { screenTimeToday, prevDayScreenTime, currentScreenTime } = req.body;
 
-        const currentDate = new Date().toDateString();
-        const lastUpdated = user.lastUpdated ? new Date(user.lastUpdated).toDateString() : null;
+        const currentDate = new Date().toISOString().slice(0, 10);
+        const lastUpdated = user.lastUpdated ? user.lastUpdated.toISOString().slice(0, 10) : null;
+
+
+        console.log(`${currentDate} and ${lastUpdated}`);
 
 
         if (screenTimeToday !== undefined && currentDate === lastUpdated) {
