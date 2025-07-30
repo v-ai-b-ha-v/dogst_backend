@@ -113,8 +113,11 @@ router.post('/updateStats', generalLimiter, authenticate, async (req, res) => {
 
         const { screenTimeToday, prevDayScreenTime, currentScreenTime } = req.body;
 
-        const currentDate = new Date().toISOString().slice(0, 10);
-        const lastUpdated = user.lastUpdated ? user.lastUpdated.toISOString().slice(0, 10) : null;
+        const indianDateString = (d) => new Date(d).toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+
+        const currentDate = indianDateString(new Date());
+        const lastUpdated = user.lastUpdated ? indianDateString(user.lastUpdated) : null;
+
 
 
         console.log(`${currentDate} and ${lastUpdated}`);
